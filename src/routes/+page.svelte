@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { dataStore } from '$lib/stores';
-  import type { Item } from '$lib/stores';
-
-  const items = dataStore.subscribe((value: Item[]) => value.items);
+  import { data as items } from '$lib/stores'
+  import type { Item } from '$lib/stores'
 </script>
 
 <div class="bg-gray-100 min-h-screen w-screen">
@@ -14,25 +12,27 @@
       placeholder="Search shop or item..."
     />
     <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
-      <li class="w-full flex flex-col p-5 gap-2">
-        <div class="flex gap-2 items-center">
-          <img
-            src="https://minecraft.wiki/images/Enchanted_Book.gif"
-            alt="Enchantment book"
-            class="h-7"
-          />
-          <span class="text-xl">Name</span>
-          <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
-          <span class="text-xl text-[#1aaba7]">Price</span>
-          <div class="grow"></div>
-          <span>Username</span>
-        </div>
-        <div class="flex gap-2 items-center">
-          <span>Store name</span>
-          <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
-          <span>x y</span>
-        </div>
-      </li>
+      {#each $items as item}
+        <li class="w-full flex flex-col p-5 gap-2">
+          <div class="flex gap-2 items-center">
+            <img
+              src={item.icon}
+              alt={item.icon}
+              class="h-7"
+            />
+            <span class="text-xl">{item.name}</span>
+            <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
+            <span class="text-xl text-[#1aaba7]">{item.price}</span>
+            <div class="grow"></div>
+            <span>{item.seller}</span>
+          </div>
+          <div class="flex gap-2 items-center">
+            <span>{item.store}</span>
+            <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
+            <span>{item.x} {item.y}</span>
+          </div>
+        </li>
+      {/each}
     </ul>
   </div>
 </div>
