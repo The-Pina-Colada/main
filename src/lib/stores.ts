@@ -15,4 +15,23 @@ const icons = {
   totem_of_undying: 'https://minecraft.wiki/images/Totem_of_Undying_JE2_BE2.png'
 }
 
-export const data = writable<Item[]>()
+export const data = writable<Item[]>([
+  {
+    icon: icons.enchanted_book,
+    name: 'Mending',
+    price: '2',
+    seller: 'test',
+    store: 'test',
+    x: 0,
+    y: 0
+  },
+  {
+    icon: icons.totem_of_undying,
+    name: 'Totem of Undying',
+    price: '1',
+    seller: 'test 2',
+    store: 'test 2',
+    x: 0,
+    y: 0
+  }
+])
