@@ -11,10 +11,12 @@ export interface Item {
   y: number
 }
 
-const icons = {
-  enchanted_book: 'https://minecraft.wiki/images/Enchanted_Book.gif',
-  totem_of_undying: 'https://minecraft.wiki/images/Totem_of_Undying_JE2_BE2.png'
+interface Icon {
+  name: string
+  url: string
 }
+
+const { data: icons } = await supabase.from("itemimages").select() as { data: Icon[] }
 
 export const shopitems = writable<Item[]>([])
 
@@ -29,7 +31,7 @@ load().then((data) => {
   const iconswapped = data.shopitems.map((item: Item) => {
     return {
       ...item,
-      icon: icons[item.icon as keyof typeof icons] ?? item.icon
+      icon: icons.find(icon => icon.name === item.icon)?.url ?? item.icon
     }
   })
   shopitems.set(iconswapped)
