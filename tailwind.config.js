@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        minecraft: ['Minecraft', 'monospace'],
+        minecraft: ['Minecraft', 'monospace']
       }
     }
   },

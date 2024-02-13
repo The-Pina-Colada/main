@@ -3,7 +3,7 @@ import { writable } from 'svelte/store'
 export interface Item {
   icon: string
   name?: string
-  price: string|number
+  price: string | number
   seller: string
   store: string
   x: number
