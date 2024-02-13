@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Minecraft';
-    src: url('https://minecraft.wiki/images/Minecraft.woff2?ade8a') format('woff2');
+  font-family: 'Minecraft';
+  src: url('https://minecraft.wiki/images/Minecraft.woff2?ade8a') format('woff2');
 }
