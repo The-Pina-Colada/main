@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { data as items } from '$lib/stores'
-  import type { Item } from '$lib/stores'
+  import { shopitems } from '$lib/stores'
 </script>
 
 <div class="bg-gray-100 min-h-screen w-screen">
@@ -12,7 +11,7 @@
       placeholder="Search shop or item..."
     />
     <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
-      {#each $items as item}
+      {#each $shopitems as item}
         <li class="w-full flex flex-col p-5 gap-2">
           <div class="flex gap-2 items-center">
             <img
