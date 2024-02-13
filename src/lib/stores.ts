@@ -1,13 +1,6 @@
 import { writable } from 'svelte/store'
 import { supabase } from "$lib/supabase"
 
-export async function load() {
-  const { data } = await supabase.from("shopitems").select()
-  return {
-    shopitems: data ?? [],
-  }
-}
-
 export interface Item {
   icon: string
   name?: string
@@ -24,6 +17,13 @@ const icons = {
 }
 
 export const shopitems = writable<Item[]>([])
+
+export async function load() {
+  const { data } = await supabase.from("shopitems").select()
+  return {
+    shopitems: data ?? [],
+  }
+}
 
 load().then((data) => {
   const iconswapped = data.shopitems.map((item: Item) => {
