@@ -1,3 +1,10 @@
+<script lang="ts">
+  import { dataStore } from '$lib/stores';
+  import type { Item } from '$lib/stores';
+
+  const items = dataStore.subscribe((value: Item[]) => value.items);
+</script>
+
 <div class="bg-gray-100 min-h-screen w-screen">
   <div class="max-w-xl mx-auto pt-24 pb-5">
     <h1 class="text-5xl font-bold text-center">Pina Colada<br />Shop List</h1>
