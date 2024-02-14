@@ -3,6 +3,10 @@
   import { shopitems, loading } from '$lib/stores'
 
   let query: string = ''
+  function calculateNumber(str: string): number {
+    const [stacks, lastNum] = str.match(/(\d+s)?\s?(\d+)?/) || []
+    return (stacks ? parseInt(stacks) * 64 : 0) + (lastNum ? parseInt(lastNum) : 0)
+  }
   $: results = (
     query
       ? $shopitems.filter((item) =>
@@ -10,10 +14,12 @@
         )
       : $shopitems
   ).sort((a, b) => {
-    if (a.price === b.price) {
+    let priceA = typeof a.price == 'string' ? calculateNumber(a.price) : a.price
+    let priceB = typeof b.price == 'string' ? calculateNumber(b.price) : b.price
+    if (priceA === priceB) {
       return Math.abs(a.x) + Math.abs(a.y) - (Math.abs(b.x) + Math.abs(b.y))
     }
-    return a.price - b.price
+    return priceA - priceB
   })
 </script>
 
