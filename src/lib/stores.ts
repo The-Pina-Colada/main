@@ -11,16 +11,18 @@ export interface Item {
   y: number
 }
 
-export const shopitems = writable<Item[]>([])
+export const shopitems = writable<Item[]>([]);
 
-const { data: itemsData } = await supabase.from('shopitems').select()
-const { data: iconsData } = await supabase.from('itemimages').select()
+(async () => {
+  const { data: itemsData } = await supabase.from('shopitems').select()
+  const { data: iconsData } = await supabase.from('itemimages').select()
 
-const iconswapped = itemsData?.map((item: Item) => {
-  return {
-    ...item,
-    icon: iconsData?.find((icon) => icon.name === item.icon)?.url ?? item.icon
-  }
-})
+  const iconswapped = itemsData?.map((item: Item) => {
+    return {
+      ...item,
+      icon: iconsData?.find((icon) => icon.name === item.icon)?.url ?? item.icon
+    }
+  })
 
-shopitems.set(iconswapped ?? [])
+  shopitems.set(iconswapped ?? [])
+})()
