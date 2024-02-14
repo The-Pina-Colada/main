@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store'
+import { supabase } from '$lib/supabase'
 
 export interface Item {
   icon: string
@@ -10,28 +11,18 @@ export interface Item {
   y: number
 }
 
-const icons = {
-  enchanted_book: 'https://minecraft.wiki/images/Enchanted_Book.gif',
-  totem_of_undying: 'https://minecraft.wiki/images/Totem_of_Undying_JE2_BE2.png'
-}
+export const shopitems = writable<Item[]>([]);
 
-export const data = writable<Item[]>([
-  {
-    icon: icons.enchanted_book,
-    name: 'Mending',
-    price: '2',
-    seller: 'test',
-    store: 'test',
-    x: 0,
-    y: 0
-  },
-  {
-    icon: icons.totem_of_undying,
-    name: 'Totem of Undying',
-    price: '1',
-    seller: 'test 2',
-    store: 'test 2',
-    x: 0,
-    y: 0
-  }
-])
+(async () => {
+  const { data: itemsData } = await supabase.from('shopitems').select()
+  const { data: iconsData } = await supabase.from('itemimages').select()
+
+  const iconswapped = itemsData?.map((item: Item) => {
+    return {
+      ...item,
+      icon: iconsData?.find((icon) => icon.name === item.icon)?.url ?? item.icon
+    }
+  })
+
+  shopitems.set(iconswapped ?? [])
+})()
