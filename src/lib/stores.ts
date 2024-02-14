@@ -11,8 +11,9 @@ export interface Item {
   y: number
 }
 
-export const shopitems = writable<Item[]>([])
+export const loading = writable(true)
 
+export const shopitems = writable<Item[]>([])
 ;(async () => {
   const { data: itemsData } = await supabase.from('shopitems').select()
   const { data: iconsData } = await supabase.from('itemimages').select()
@@ -25,4 +26,5 @@ export const shopitems = writable<Item[]>([])
   })
 
   shopitems.set(iconswapped ?? [])
+  loading.set(false)
 })()

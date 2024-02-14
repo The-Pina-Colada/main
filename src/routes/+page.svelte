@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { shopitems } from '$lib/stores'
+  import { shopitems, loading } from '$lib/stores'
 
   let query: string = ''
   $: results = (
@@ -25,24 +25,28 @@
       placeholder="Search shop or item..."
       bind:value={query}
     />
-    <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
-      {#each results as item}
-        <li class="w-full flex flex-col p-5 gap-2">
-          <div class="flex gap-2 items-center">
-            <img src={item.icon} alt={item.icon} class="h-7" />
-            <span class="text-xl">{item.name}</span>
-            <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
-            <span class="text-xl text-[#1aaba7]">{item.price}</span>
-            <div class="grow"></div>
-            <span>{item.seller}</span>
-          </div>
-          <div class="flex gap-2 items-center">
-            <span>{item.store}</span>
-            <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
-            <span>{item.x} {item.y}</span>
-          </div>
-        </li>
-      {/each}
-    </ul>
+    {#if $loading}
+      <h2 class="font-medium text-neutral-500 text-xl text-center mt-10">Loading items...</h2>
+    {:else}
+      <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
+        {#each results as item}
+          <li class="w-full flex flex-col p-5 gap-2">
+            <div class="flex gap-2 items-center">
+              <img src={item.icon} alt={item.icon} class="h-7" />
+              <span class="text-xl">{item.name}</span>
+              <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
+              <span class="text-xl text-[#1aaba7]">{item.price}</span>
+              <div class="grow"></div>
+              <span>{item.seller}</span>
+            </div>
+            <div class="flex gap-2 items-center">
+              <span>{item.store}</span>
+              <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
+              <span>{item.x} {item.y}</span>
+            </div>
+          </li>
+        {/each}
+      </ul>
+      {/if}
   </div>
 </div>
