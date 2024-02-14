@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { slide } from 'svelte/transition'
   import { shopitems, loading } from '$lib/stores'
 
   let query: string = ''
@@ -29,8 +30,8 @@
       <h2 class="font-medium text-neutral-500 text-xl text-center mt-10">Loading items...</h2>
     {:else}
       <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
-        {#each results as item}
-          <li class="w-full flex flex-col p-5 gap-2">
+        {#each results as item (`${item.name}-${item.price}/${item.seller}/${item.store}`)}
+          <li class="w-full flex flex-col p-5 gap-2" transition:slide>
             <div class="flex gap-2 items-center">
               <img src={item.icon} alt={item.icon} class="h-7" />
               <span class="text-xl">{item.name}</span>
