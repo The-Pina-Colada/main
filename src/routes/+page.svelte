@@ -1,5 +1,19 @@
 <script lang="ts">
   import { shopitems } from '$lib/stores'
+
+  let query: string = ''
+  $: results = (
+    query
+      ? $shopitems.filter((item) =>
+          `${item.name} ${item.seller} ${item.store}`.toLowerCase().includes(query.toLowerCase())
+        )
+      : $shopitems
+  ).sort((a, b) => {
+    if (a.price === b.price) {
+      return Math.abs(a.x) + Math.abs(a.y) - (Math.abs(b.x) + Math.abs(b.y))
+    }
+    return a.price - b.price
+  })
 </script>
 
 <div class="bg-gray-100 min-h-screen w-screen">
@@ -9,9 +23,10 @@
       type="text"
       class="input w-full mt-10 sticky top-10 shadow-lg focus:outline-0 focus:border-0 focus:shadow-lg"
       placeholder="Search shop or item..."
+      bind:value={query}
     />
     <ul class="flex flex-col bg-white w-full mt-5 rounded-lg font-minecraft">
-      {#each $shopitems as item}
+      {#each results as item}
         <li class="w-full flex flex-col p-5 gap-2">
           <div class="flex gap-2 items-center">
             <img src={item.icon} alt={item.icon} class="h-7" />
