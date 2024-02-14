@@ -10,6 +10,7 @@ export interface ProcessedItem {
   x: number
   y: number
 }
+
 interface RawItem {
   icon: string
   name?: string
@@ -30,17 +31,15 @@ interface Store {
 }
 
 export const loading = writable(true)
-
 export const shopitems = writable<ProcessedItem[]>([])
 ;(async () => {
-  const { data: itemsData  } = await supabase.from('shopitems').select() as { data: RawItem[] }
-  const { data: iconsData } = await supabase.from('itemimages').select() as { data: Icon[] }
-  const { data: storesData } = await supabase.from('stores').select()  as { data: Store[] }
+  const { data: itemsData } = (await supabase.from('shopitems').select()) as { data: RawItem[] }
+  const { data: iconsData } = (await supabase.from('itemimages').select()) as { data: Icon[] }
+  const { data: storesData } = (await supabase.from('stores').select()) as { data: Store[] }
 
   const processed = itemsData?.map((item) => {
     const icon = iconsData?.find((icon) => icon.name === item.icon)
     const store = storesData?.find((store) => store.name === item.store)
-
     return {
       icon: icon?.url,
       name: item.name,
