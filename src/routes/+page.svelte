@@ -39,7 +39,7 @@
         {#each results as item (`${item.name}-${item.price}/${item.seller}/${item.store}`)}
           <li class="w-full flex flex-col p-5 gap-2" transition:slide>
             <div class="flex gap-2 items-center">
-              <img src={item.icon} alt={item.icon} class="h-7" />
+              <img src={item.icon} alt={item.icon} class="h-7 [image-rendering:_pixelated]" />
               <span class="text-xl">{item.name}</span>
               <div class="w-1 h-1 bg-neutral-400 rounded-full"></div>
               <span class="text-xl text-[#1aaba7]">{item.price}</span>
