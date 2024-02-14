@@ -54,6 +54,6 @@
           </li>
         {/each}
       </ul>
-      {/if}
+    {/if}
   </div>
 </div>
